@@ -2,21 +2,50 @@
 """
 @author: António Brito / Carlos Bragança
 (2021)
-#objective: ex01 - test class Person
+#objective: class Person
 
 """""
-from pessoa import Pessoa
+#%% Class Pessoa
+import datetime
+class Pessoa:
+    # Constructor: Called when an object is instantiated
+    def __init__(self, name, dob):
+        # Object attributes
+        self._name = name
+        doblist = list(map(int, dob.split('-')))
+        self._dob = datetime.date(doblist[0], doblist[1], doblist[2])
+    # Class method to implement constructor overloading
+    @classmethod
+    def from_string(cls, person_data):
+        args_list = person_data.split(",")
+        return cls(args_list[0], args_list[1])
+    # name property getter method
+    @property
+    def name(self):
+        return self._name
+    # dob property getter method
+    @property
+    def dob(self):
+        return self._dob
+    # age property getter method
+    @property
+    def age(self):
+        tday = datetime.date.today()
+        age = tday.year - self.dob.year
+        if tday.month < self.dob.month or \
+            (tday.month == self.dob.month and tday.day < self.dob.day):
+            age -= 1
+        return age
+    # Method to return the surname
+    def apelido(self):
+        names = self._name.split(' ')
+        return names[-1]
+    # Method to return the first name
+    def nomeproprio(self):
+        names = self._name.split(' ')
+        return names[0]
+    # Method to return object info
+    def __str__(self):
+        return f'{self.name}, {self.dob}, {self.age}'
 
-# Creates two object with arguments: name, date of birthday
-p1 = Pessoa("Carlos Sousa", "1958-03-23")
-p2 = Pessoa.from_string("Joana Pinto, 1980-04-27")
-# Print objects
-print(p1)
-print(p2)
-# print attributes
-print('Name:', p1.name)
-print('Date of birth:', p1.dob)
-print('age:', p1.age)
-# Use methods
-print('Apelido:', p1.apelido())
-print('Nome próprio:', p1.nomeproprio())
+
