@@ -5,7 +5,7 @@
 #objective: ex01 - test class Person
 
 """""
-from pessoa import Pessoa
+from ex01_pessoa import Pessoa
 
 # Creates two object with arguments: name, date of birthday
 p1 = Pessoa("Carlos Sousa", "1958-03-23")
